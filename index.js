@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 'use strict';
-
 class Scope {
-	static init () {
-		return Object.freeze(new Scope(...arguments));
+
+	static init (...args) {
+		return Object.freeze(new Scope(...args));
 	};
 
 	static _2key (key) {
@@ -15,8 +15,12 @@ class Scope {
 		return JSON.parse(key);
 	}
 
-	constructor () {
+	constructor (...args) {
 		this._scope = {};
+		for (let a of args) {
+			if (!(a instanceof Object)) continue;
+			for (let k in a) this.setItem(k, a[k]);
+		}
 	};
 
 	get count () {
@@ -32,8 +36,8 @@ class Scope {
 	}
 
 	getItem (key) {
-		if (!this.hasItem(key)) throw 1;
-		else return this._scope[Scope._2key(key)];
+		if (this.hasItem(key)) return this._scope[Scope._2key(key)];
+		throw 'Scope.getItem called with key not in Scope';
 	}
 
 	setItem (key, value) {

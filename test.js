@@ -67,30 +67,21 @@ class Test {
 	}
 
 	call_ScopeSetItem () {
-		let s = Scope.init();
+		let s = Scope.init({'key-1': 'value-1'}, {'key-2': 'value-2'});
 		s.setItem([], []);
-		s.setItem('key-1', 'value-1');
-		s.setItem('key-2', 'value-2');
-		Assert.deepEqual(s.keys, [[], 'key-1', 'key-2'], 'Calling instance method "setItem" of class "Scope"');
+		Assert.deepEqual(s.keys, ['key-1', 'key-2', []], 'Calling instance method "setItem" of class "Scope"');
 	}
 
 	call_ScopeGetItem () {
-		let s = Scope.init();
-		s.setItem([], []);
-		s.setItem('key-1', 'value-1');
-		s.setItem('key-2', 'value-2');
+		let s = Scope.init({'key-1': 'value-1'}, {'key-2': 'value-2'});
 		Assert.deepEqual(s.getItem('key-1'), 'value-1', 'Calling instance method "getItem" of class "Scope"');
 	}
 
 	call_ScopeHasItem () {
-		let s = Scope.init();
-		s.setItem([], []);
-		s.setItem('key-1', 'value-1');
-		s.setItem('key-2', 'value-2');
+		let s = Scope.init({'key-1': 'value-1'}, {'key-2': 'value-2'});
 		Assert.deepEqual(s.hasItem('key-1'), true, 'Calling instance method "hasItem" of class "Scope"');
 	}
 }
 
 const test = new Test();
 console.log(test.run());
-
