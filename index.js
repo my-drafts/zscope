@@ -50,4 +50,3 @@ class Scope {
 }
 
 exports.Scope = Scope;
-exports.ErrorScope = ErrorScope;
