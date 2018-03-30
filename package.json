@@ -1,0 +1,22 @@
+{
+  "name": "zscope",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Sergej Kukharev",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergej-kucharev/zscope.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sergej-kucharev/zscope/issues"
+  },
+  "homepage": "https://github.com/sergej-kucharev/zscope#readme"
+}
