@@ -16,7 +16,8 @@ class Test {
 			this.check_ScopeKeys,
 			this.call_ScopeSetItem,
 			this.call_ScopeGetItem,
-			this.call_ScopeHasItem
+			this.call_ScopeGetItemFail,
+			this.call_ScopeHasItem,
 		]
 		.map((method) => {
 			try {
@@ -75,6 +76,16 @@ class Test {
 	call_ScopeGetItem () {
 		let s = Scope.init({'key-1': 'value-1'}, {'key-2': 'value-2'});
 		Assert.deepEqual(s.getItem('key-1'), 'value-1', 'Calling instance method "getItem" of class "Scope"');
+	}
+
+	call_ScopeGetItemFail () {
+		let s = Scope.init({'key-1': 'value-1'}, {'key-2': 'value-2'});
+		try {
+			s.getItem('key-3');
+			throw new Error('Calling instance method "getItem" of class "Scope" with wrong key');
+		}
+		catch (E) {
+		}
 	}
 
 	call_ScopeHasItem () {

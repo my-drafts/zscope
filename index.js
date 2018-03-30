@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 'use strict';
+
 class Scope {
 
 	static init (...args) {
@@ -37,7 +38,7 @@ class Scope {
 
 	getItem (key) {
 		if (this.hasItem(key)) return this._scope[Scope._2key(key)];
-		throw 'Scope.getItem called with key not in Scope';
+		throw new Error('Scope.getItem called with key not in Scope');
 	}
 
 	setItem (key, value) {
@@ -49,3 +50,4 @@ class Scope {
 }
 
 exports.Scope = Scope;
+exports.ErrorScope = ErrorScope;
