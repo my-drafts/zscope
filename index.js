@@ -18,9 +18,9 @@ class Scope {
 
 	constructor (...args) {
 		this._scope = {};
-		for (let a of args) {
-			if (!(a instanceof Object)) continue;
-			for (let k in a) this.setItem(k, a[k]);
+		for (let arg of args) {
+			if (!(arg instanceof Object)) continue;
+			for (let key in arg) this._set(key, arg[key]);
 		}
 	};
 
@@ -32,19 +32,41 @@ class Scope {
 		return Object.keys(this._scope).map(key => Scope._4key(key));
 	}
 
-	hasItem (key) {
+	_is (key) {
 		return Scope._2key(key) in this._scope;
 	}
 
-	getItem (key) {
-		if (this.hasItem(key)) return this._scope[Scope._2key(key)];
-		throw new Error('Scope.getItem called with key not in Scope');
+	_get (key) {
+		if (this._is(key)) return this._scope[Scope._2key(key)];
+		throw new Error('Scope._get called with key not in Scope');
 	}
 
-	setItem (key, value) {
-		const result = this.hasItem(key);
+	_set (key, value) {
+		const result = this._is(key);
 		this._scope[Scope._2key(key)] = value;
 		return result;
+	}
+
+	_unset (key) {
+		const result = this._is(key);
+		delete this._scope[Scope._2key(key)];
+		return result;
+	}
+
+	isItem (...args) {
+		return this._is(...args);
+	}
+
+	getItem (...args) {
+		return this._get(...args);
+	}
+
+	setItem (...args) {
+		return this._set(...args);
+	}
+
+	unsetItem (...args) {
+		return this._unset(...args);
 	}
 
 }
