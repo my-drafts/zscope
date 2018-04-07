@@ -2,7 +2,7 @@ const chai = require('chai');
 const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
-const Scope = require('..').Scope;
+const Scope = require('../Scope').Scope;
 
 describe('Scope', () => {
 	describe('static', () => {
