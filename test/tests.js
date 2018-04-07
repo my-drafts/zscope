@@ -2,6 +2,8 @@ const chai = require('chai');
 const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
+const mlog = require('mocha-logger');
+const util = require('util');
 const Scope = require('../Scope').Scope;
 
 describe('Scope', () => {
@@ -105,18 +107,18 @@ describe('Scope', () => {
 		it('_set adds pair (key, value) to Scope', () => {
 			let k1 = { 'key-1': 'value-1' };
 			let k2 = { 'key-2': 'value-2' };
-			let k3 = [ 'key-3', 'value-3' ];
-			let k4 = [ 1, 'value-4' ];
-			let k5 = [ 1, 'value-5' ];
+			let k3 = { 'key-3': 'value-3' };
+			let k4 = { 'x': 'value-4' };
+			let k5 = { 'x': 'value-5' };
 			let s = Scope.init(k1, k2);
 			expect(s._set).to.be.an.instanceof(Function);
-			expect(s._set(k3[0], k3[1])).to.false;
-			expect(s._get(k3[0])).to.equal(k3[1]);
-			expect(s._set(k4[0], k4[1])).to.false;
-			expect(s._get(k4[0])).to.equal(k4[1]);
-			expect(s._set(k5[0], k5[1])).to.true;
-			expect(s._get(k5[0])).to.equal(k5[1]);
-			expect(s.keys).to.have.members(['key-1', 'key-2', k3[0], k5[0]]);
+			expect(s._set(k3)).to.false;
+			expect(s._get('key-3')).to.equal('value-3');
+			expect(s._set(k4)).to.false;
+			expect(s._get('x')).to.equal('value-4');
+			expect(s._set(k5)).to.true;
+			expect(s._get('x')).to.equal('value-5');
+			expect(s.keys).to.have.members(['key-1', 'key-2', 'key-3', 'x']);
 		});
 
 		it('_unset removes pair (key, value) from Scope by key', () => {
@@ -153,14 +155,12 @@ describe('Scope', () => {
 		it('setItem alias to Scope._set', () => {
 			let k1 = { 'key-1': 'value-1' };
 			let k2 = { 'key-2': 'value-2' };
-			let k3 = [ 'key-3', 'value-3' ];
+			let k3 = { 'key-3': 'value-3' };
 			let s = Scope.init(k1, k2);
 			expect(s.setItem).to.be.an.instanceof(Function);
-			expect(s.setItem(k3[0], k3[1])).to.false;
-			expect(s.getItem(k3[0])).to.equal(k3[1]);
-			expect(s.setItem(k3[0], k3[1])).to.true;
-			expect(s.getItem(k3[0])).to.equal(k3[1]);
-			expect(s.keys).to.have.members(['key-1', 'key-2', k3[0]]);
+			expect(s.setItem(k3)).to.false;
+			expect(s.setItem(k3)).to.true;
+			expect(s.keys).to.have.members(['key-1', 'key-2', 'key-3']);
 		});
 
 		it('unsetItem alias to Scope._unset', () => {

@@ -18,10 +18,7 @@ class Scope {
 
 	constructor (...args) {
 		this._scope = {};
-		for (let arg of args) {
-			if (!(arg instanceof Object)) continue;
-			for (let key in arg) this._set(key, arg[key]);
-		}
+		this._set(...args);
 	}
 
 	get count () {
@@ -41,7 +38,28 @@ class Scope {
 		throw new Error('Scope._get called with key not in Scope');
 	}
 
-	_set (key, value) {
+	_set (...args) {
+		return this._setArray(args);
+	}
+
+	_setArray (array) {
+		if (arguments.length===0) return [];
+		if (array instanceof Array) {
+			let result = array.map(a => this._setObject(a), this);
+			return result.length===1 ? result[0] : result;
+		}
+		throw new Error('Scope._setArray called with non-array');
+	}
+
+	_setObject (object) {
+		if (object instanceof Object) {
+			let result = Object.keys(object).map(key => this._setKeyValue(key, object[key]), this);
+			return result.length===1 ? result[0] : result;
+		}
+		throw new Error('Scope._setObject called with non-object');
+	}
+
+	_setKeyValue (key, value) {
 		const result = this._is(key);
 		this._scope[Scope._2key(key)] = value;
 		return result;
