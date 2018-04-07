@@ -6,7 +6,7 @@ class Scope {
 
 	static init (...args) {
 		return Object.freeze(new Scope(...args));
-	};
+	}
 
 	static _2key (key) {
 		return JSON.stringify(key);
@@ -22,7 +22,7 @@ class Scope {
 			if (!(arg instanceof Object)) continue;
 			for (let key in arg) this._set(key, arg[key]);
 		}
-	};
+	}
 
 	get count () {
 		return Object.keys(this._scope).length;
